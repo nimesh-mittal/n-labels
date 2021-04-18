@@ -2,11 +2,11 @@ package main
 
 import (
   "fmt"
-  "n-labels/entity"
+  "n_labels/entity"
 )
 
 func main(){
   fmt.Println("hello labels!!")
-  e := entity.Label{}
-  fmt.Println(e)
+  l1 := entity.Label{Namespace: "ns01", Name: "label1", Active: true}
+  fmt.Println(l1)
 }
