@@ -30,12 +30,12 @@ Label service should provide QPS of 2000 per node
 Label service should provide newly created labels in search results immediately 
 
 # Architecture
-
+![image](https://user-images.githubusercontent.com/10060860/115158869-02ffbc00-a0ae-11eb-9c77-8a7fcb58ba39.png)
 
 # Implementation
 ## API Interface
 
-```js
+```go
 
 type Interface{
   Create(labelName string) string    // create new label
