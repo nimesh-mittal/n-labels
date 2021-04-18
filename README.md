@@ -31,12 +31,38 @@ Label service should provide newly created labels in search results immediately
 
 # Architecture
 
+
 # Implementation
 ## API Interface
+
+```js
+
+type Interface{
+  Create(labelName string) string    // create new label
+  Delete(labelID uuid) bool          // delete exisiting label
+  Attach(labelID uuid, entityID uuid) bool    // attach label to an entity
+  Search(keyword string) []string    // search labels by keyword
+  ListLabels(entityID uuid) []uuid // list labels of an entity
+  ListEntities(labelID uuid) []uuid // list entities of a label
+}
+
+```
+
 ## Data Model
+| Table Name | Description | Columns |
+| ------- | ---- | ---- |
+| label | Represents label | (namespace, name, enable, *who...*)
+| label_entity | Represents mapping between label and entity | (namespace, label_id, entity_id, *who...*)
+
+Note: expand who... as created_by, created_at, updated_by, updated_at
+
 ## Database choice
+A close look at the API interface reveals equal amount to read and write. While data consistency is required need for strong transaction semantics is not required hence any database that provides eventual consistency can also be consider. 
+
+Given Mongo DB provides high availability and horizontal scalability it can be use to achive hight throughput and low latency.
 
 # Scalability and Fault tolerance
+
 ## Functional and Load testing
 
 # Alerting and Monitoring
