@@ -52,19 +52,34 @@ type Interface{
 | Table Name | Description | Columns |
 | ------- | ---- | ---- |
 | label | Represents label | (namespace, name, enable, *who...*)
-| label_entity | Represents mapping between label and entity | (namespace, label_id, entity_id, *who...*)
+| label_entity | Represents mapping between label and entity | (namespace, label_id, entity_id, attached_by, *who...*)
 
 Note: expand who... as created_by, created_at, updated_by, updated_at
 
 ## Database choice
-A close look at the API interface reveals equal amount to read and write. While data consistency is required need for strong transaction semantics is not required hence any database that provides eventual consistency can also be consider. 
+A close look at the API interface reveals equal amount to read and write requests. While data consistency is required, need for strong transaction semantics is not required hence any database that provides eventual consistency can also be consider. 
 
 Given Mongo DB provides high availability and horizontal scalability it can be use to achive hight throughput and low latency.
 
 # Scalability and Fault tolerance
+Inorder to survive host failure, multiple instances of the service needs to be deployed behind load balancer. Load balance should detect host failure and transfer any incoming request to only healthy node. One choice is to use ngnix server to perform load balancing.
 
-## Functional and Load testing
+Given one instance of service can serve not more than 2000 request per second, one must deploy more than one instance to achive required throughput from the system
 
-# Alerting and Monitoring
+Load balancer should also rate limiting incoming requests to avoid single user/client penalising all other user/client due to heavy load.
+
+# Functional and Load testing
+Service should implement good code coverage and write functional and load test cases to maintain high engineering quality standards.
+
+# Logging, Alerting and Monitoring
+Service should also expose health end-point to accuretly monitor the health of the service. 
+
+Service should also integrate with alerting framework like new relic to accuretly alert developers on unexpected failured and downtime
+
+Service should also integrate with logging library like zap and distributed tracing library like Jager for easy debugging
 
 # Security
+Service should validated the request using Oauth token to ensure request is coming from authentic source
+
+# Documentation
+This README file provides complete documentation. Link to any other documentation will be provided in the Reference section of this document.
