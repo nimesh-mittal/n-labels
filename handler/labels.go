@@ -104,7 +104,7 @@ func (h *labelHandler) ListLabel(w http.ResponseWriter, r *http.Request) {
 }
 
 func (h *labelHandler) AttachLabel(w http.ResponseWriter, r *http.Request) {
-  id := chi.URLParam(r, "LabelId")
+  id := chi.URLParam(r, "LabelID")
 
   decoder := json.NewDecoder(r.Body)
 	defer r.Body.Close()
@@ -134,12 +134,22 @@ func (h *labelHandler) AttachLabel(w http.ResponseWriter, r *http.Request) {
 }
 
 func (h *labelHandler) GetLabels(w http.ResponseWriter, r *http.Request) {
-  // TODO: complete the implementation
-  w.Write([]byte("get labels attached to an entity"))
+  id := chi.URLParam(r, "EntityID")
+  labels, err := h.LabelService.GetLabels(id, "namespace")
+
+  if err != nil{
+    e := entity.NewError("error processing get labels request")
+    res, _ := json.Marshal(e)
+    w.Write(res)  
+    return
+  }
+
+  res, _ := json.Marshal(labels)
+  w.Write(res)
 }
 
 func (h *labelHandler) GetEntities(w http.ResponseWriter, r *http.Request) {
-  id := chi.URLParam(r, "LabelId")
+  id := chi.URLParam(r, "LabelID")
 
   entities, err := h.LabelService.GetEntities(id, "namespace")
 
