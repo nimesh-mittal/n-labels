@@ -3,10 +3,10 @@
 # Background
 Aim of this service is to provide ability to manage set of entities by associating entities with tags, also called as labels. Labels are attached to an entity in order to achive following benefits
 
-1. Labels provides a way to organise collection of entities
+1. Labels provides a way of organising collection of entities
 2. Helps retriving one or more related entities by label
 3. Allow special treatment to certain entities by categorising them using labels
-4. Labels can be use to assign entities to users
+4. Labels can be use to assign entities to users i.e., to create fluid workflows
 5. Labels can be use to control the visibility of an entity
 
 While this list covers some common usecases it is no way exhaustive.

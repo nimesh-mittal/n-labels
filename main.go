@@ -1,12 +1,15 @@
 package main
 
 import (
-  "fmt"
-  "n_labels/entity"
+  "n_labels/server"
+  "n_labels/handler"
 )
 
 func main(){
-  fmt.Println("hello labels!!")
-  l1 := entity.Label{Namespace: "ns01", Name: "label1", Active: true}
-  fmt.Println(l1)
+  h := handler.New()
+
+  s := server.New()
+  s.Mount("/labels", h.NewLabelHandler())
+
+  s.StartServer(":8084")
 }
