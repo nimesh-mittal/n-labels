@@ -9,3 +9,15 @@ type Label struct {
   UpdatedBy string
   UpdatedAt int64
 }
+
+
+type CreateLabelRequest struct{
+  Namespace string
+  Name string
+}
+
+
+type AttachLabelRequest struct{
+  Namespace string
+  EntityId string
+}
