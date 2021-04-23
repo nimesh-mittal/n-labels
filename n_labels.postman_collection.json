@@ -1,0 +1,206 @@
+{
+	"info": {
+		"_postman_id": "24b61dfb-2c35-4f9a-a755-17671f988eef",
+		"name": "n_labels",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Create Label",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"namespace\": \"test\",\n    \"name\": \"label1\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://nlabels.nimeshmittal.repl.co/labels",
+					"protocol": "https",
+					"host": [
+						"nlabels",
+						"nimeshmittal",
+						"repl",
+						"co"
+					],
+					"path": [
+						"labels"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Label",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://nlabels.nimeshmittal.repl.co/labels/label1",
+					"protocol": "https",
+					"host": [
+						"nlabels",
+						"nimeshmittal",
+						"repl",
+						"co"
+					],
+					"path": [
+						"labels",
+						"label1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "List Label",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://nlabels.nimeshmittal.repl.co/labels/label1",
+					"protocol": "https",
+					"host": [
+						"nlabels",
+						"nimeshmittal",
+						"repl",
+						"co"
+					],
+					"path": [
+						"labels",
+						"label1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Attach Label",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"EntityId\": \"e7\",\n    \"Namespace\": \"namespace1\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://nlabels.nimeshmittal.repl.co/labels/label1/_attach",
+					"protocol": "https",
+					"host": [
+						"nlabels",
+						"nimeshmittal",
+						"repl",
+						"co"
+					],
+					"path": [
+						"labels",
+						"label1",
+						"_attach"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Entities by Label",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"EntityId\": \"e1\",\n    \"Namespace\": \"namespace1\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://nlabels.nimeshmittal.repl.co/labels/label2/_getEntities",
+					"protocol": "https",
+					"host": [
+						"nlabels",
+						"nimeshmittal",
+						"repl",
+						"co"
+					],
+					"path": [
+						"labels",
+						"label2",
+						"_getEntities"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Labels By Entity ID",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"EntityId\": \"e1\",\n    \"Namespace\": \"namespace1\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://nlabels.nimeshmittal.repl.co/labels/fetch/e1",
+					"protocol": "https",
+					"host": [
+						"nlabels",
+						"nimeshmittal",
+						"repl",
+						"co"
+					],
+					"path": [
+						"labels",
+						"fetch",
+						"e1"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
