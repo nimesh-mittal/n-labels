@@ -5,6 +5,7 @@ import (
   "github.com/go-chi/chi/v5/middleware"
   "net/http"
 	"time"
+  "go.uber.org/zap"
 )
 
 type Server interface{
@@ -34,6 +35,8 @@ func New() Server {
 
 // StartServer starts HTTP server at given address
 func (s *server) StartServer(address string) {
+  zap.L().Info("started running server",
+    zap.String("address", address))
 	_ = http.ListenAndServe(address, s.Router)
 }
 

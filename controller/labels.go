@@ -3,6 +3,8 @@ package controller
 import (
   "n_labels/entity"
   "n_labels/gateway"
+  "go.uber.org/zap"
+  "os"
 )
 
 // Service represent API interface for labels
@@ -18,10 +20,10 @@ type LabelService interface{
 const MONGO_DB = "labels_db"
 const MONGO_COL = "label_col"
 const MONGO_LE_COL = "label_entity_col"
-const MONGO_URL = "mongodb+srv://foo:foo1m1n1b@cluster0.9vjey.mongodb.net/labels_db?retryWrites=true&w=majority"
 
 func New() LabelService {
-  db := gateway.New(MONGO_URL)
+  url := os.Getenv("MONGO_URL_VALUE")
+  db := gateway.New(url)
   return &service{MongoDB: db}
 }
 
@@ -30,6 +32,10 @@ type service struct{
 }
 
 func (s *service) Create(name string, namespace string)(bool, error){
+  zap.L().Info("running create label",
+    zap.String("name", name),
+    zap.String("namespace", namespace))
+
   // TODO: add remaining fields
   record := entity.Label{
     Name: name,
@@ -39,7 +45,7 @@ func (s *service) Create(name string, namespace string)(bool, error){
   err := s.MongoDB.InsertDoc(MONGO_DB, MONGO_COL, record)
 
   if err!= nil{
-    // TODO: log error
+    zap.L().Error("error processing", zap.Error(err))
     return false, err
   }
 
@@ -47,6 +53,9 @@ func (s *service) Create(name string, namespace string)(bool, error){
 }
 
 func (s *service) Delete(name string, namespace string)(bool, error){
+  zap.L().Info("running delete label",
+    zap.String("name", name),
+    zap.String("namespace", namespace))
   return s.MongoDB.DeleteDocByID(MONGO_DB, MONGO_COL, "name", name)
 }
 
@@ -57,15 +66,23 @@ func (s *service) List(keyword string, namespace string)([]entity.Label, error){
 }
 
 func (s *service) Attach(labelName string, entityId string, namespace string)(bool, error){
+  zap.L().Info("running attach label",
+    zap.String("name", labelName),
+    zap.String("entityId", entityId),
+    zap.String("namespace", namespace))
   record := entity.LabelEntity{Name: labelName, EntityID: entityId, Namespace: namespace}
   err := s.MongoDB.InsertDoc(MONGO_DB, MONGO_LE_COL, record)
   if err != nil{
+    zap.L().Error("error processing", zap.Error(err))
     return false, err
   }
   return true, nil
 }
 
 func (s *service) GetEntities(labelName string, namespace string)([]string, error){
+  zap.L().Info("running GetEntities",
+    zap.String("name", labelName),
+    zap.String("namespace", namespace))
   results := []entity.LabelEntity{}
   // TODO: also include namespace in search parameter
   err := s.MongoDB.ListDocs(MONGO_DB, MONGO_LE_COL, &results, "name", labelName, 10, 0)
@@ -79,6 +96,10 @@ func (s *service) GetEntities(labelName string, namespace string)([]string, erro
 }
 
 func (s *service) GetLabels(entityId string, namespace string)([]entity.Label, error){
+  zap.L().Info("running GetLabels",
+    zap.String("entityId", entityId),
+    zap.String("namespace", namespace))
+
     results := []entity.LabelEntity{}
   // TODO: also include namespace in search parameter
   err := s.MongoDB.ListDocs(MONGO_DB, MONGO_LE_COL, &results, "entityid", entityId, 10, 0)
