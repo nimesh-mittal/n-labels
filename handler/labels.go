@@ -7,6 +7,7 @@ import (
   "github.com/go-chi/chi/v5"
   "encoding/json"
   "strconv"
+  "strings"
 )
 
 type LabelHandler interface{
@@ -32,7 +33,7 @@ func (h *labelHandler) NewLabelHandler() http.Handler {
 
 	r.Post("/", h.CreateLabel)
   r.Delete("/{LabelID}", h.DeleteLabel)
-  r.Get("/{Keyword}", h.ListLabel)
+  r.Get("/{Query}", h.ListLabel)
   r.Put("/{LabelID}/_attach", h.AttachLabel)
   r.Get("/{LabelID}/_getEntities", h.GetEntities)
   // TODO: review api path for get entities
@@ -72,8 +73,14 @@ func (h *labelHandler) CreateLabel(w http.ResponseWriter, r *http.Request) {
 func (h *labelHandler) DeleteLabel(w http.ResponseWriter, r *http.Request) {
   id := chi.URLParam(r, "LabelID")
 
-  // TODO: also take namespace as input
-  status, err := h.LabelService.Delete(id, "namespace")
+  namespace := "global"
+  if strings.Contains(id, ":"){
+    tokens := strings.Split(id, ":")
+    namespace = tokens[0]
+    id = tokens[1]
+  }
+
+  status, err := h.LabelService.Delete(id, namespace)
   
   if err != nil{
     e := entity.NewError("error processing delete label request")
@@ -88,9 +95,9 @@ func (h *labelHandler) DeleteLabel(w http.ResponseWriter, r *http.Request) {
 }
 
 func (h *labelHandler) ListLabel(w http.ResponseWriter, r *http.Request) {
-  keyword := chi.URLParam(r, "Keyword")
+  query := chi.URLParam(r, "Query")
 
-  labels, err := h.LabelService.List(keyword, "namespace")
+  labels, err := h.LabelService.List(query, "namespace")
   
   if err != nil{
     e := entity.NewError("error processing list label request")

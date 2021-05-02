@@ -83,3 +83,9 @@ Service should validated the request using Oauth token to ensure request is comi
 
 # Documentation
 This README file provides complete documentation. Link to any other documentation will be provided in the Reference section of this document.
+
+# Local Development Setup
+- Start service
+```go run main.go```
+- Run testcases with coverage
+```go test ./... -cover```

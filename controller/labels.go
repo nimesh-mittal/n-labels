@@ -32,7 +32,7 @@ type service struct{
 }
 
 func (s *service) Create(name string, namespace string)(bool, error){
-  zap.L().Info("running create label",
+  zap.L().Info("receive create label request",
     zap.String("name", name),
     zap.String("namespace", namespace))
 
@@ -45,7 +45,7 @@ func (s *service) Create(name string, namespace string)(bool, error){
   err := s.MongoDB.InsertDoc(MONGO_DB, MONGO_COL, record)
 
   if err!= nil{
-    zap.L().Error("error processing", zap.Error(err))
+    zap.L().Error("error processing created label request", zap.Error(err))
     return false, err
   }
 
@@ -53,7 +53,7 @@ func (s *service) Create(name string, namespace string)(bool, error){
 }
 
 func (s *service) Delete(name string, namespace string)(bool, error){
-  zap.L().Info("running delete label",
+  zap.L().Info("receive delete label request",
     zap.String("name", name),
     zap.String("namespace", namespace))
   return s.MongoDB.DeleteDocByID(MONGO_DB, MONGO_COL, "name", name)
@@ -66,7 +66,7 @@ func (s *service) List(keyword string, namespace string)([]entity.Label, error){
 }
 
 func (s *service) Attach(labelName string, entityId string, namespace string)(bool, error){
-  zap.L().Info("running attach label",
+  zap.L().Info("receive attach label request",
     zap.String("name", labelName),
     zap.String("entityId", entityId),
     zap.String("namespace", namespace))
@@ -80,7 +80,7 @@ func (s *service) Attach(labelName string, entityId string, namespace string)(bo
 }
 
 func (s *service) GetEntities(labelName string, namespace string)([]string, error){
-  zap.L().Info("running GetEntities",
+  zap.L().Info("receive GetEntities reqyest",
     zap.String("name", labelName),
     zap.String("namespace", namespace))
   results := []entity.LabelEntity{}
@@ -96,7 +96,7 @@ func (s *service) GetEntities(labelName string, namespace string)([]string, erro
 }
 
 func (s *service) GetLabels(entityId string, namespace string)([]entity.Label, error){
-  zap.L().Info("running GetLabels",
+  zap.L().Info("receive GetLabels request",
     zap.String("entityId", entityId),
     zap.String("namespace", namespace))
 
