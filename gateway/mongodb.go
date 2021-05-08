@@ -12,6 +12,8 @@ import (
 	"time"
 )
 
+// TODO: add interface
+
 type MongoClient struct {
 	Client *mongo.Client
 }
@@ -49,7 +51,7 @@ func (mc *MongoClient) GetDocByID(db string, col string, result interface{}, fie
 	collection := database.Collection(col)
 
 	filter := bson.D{{Key: field, Value: value}}
-
+  
 	if field == "" {
 		filter = bson.D{}
 	}
@@ -82,21 +84,22 @@ func (mc *MongoClient) DeleteDocByID(db string, col string, field string, value 
 	return del.DeletedCount == 1, nil
 }
 
-func (mc *MongoClient) ListDocs(db string, col string, results interface{}, field string, value interface{}, limit int64, offset int64) error {
+func (mc *MongoClient) ListDocs(db string, col string, results interface{}, filter map[string]interface{}, limit int64, offset int64) error {
 	database := mc.Client.Database(db)
 	collection := database.Collection(col)
 
-	filter := bson.D{{Key: field, Value: value}}
+  f := bson.D{}
+  for k,v := range filter{
+    f = append(f, bson.E{Key: k, Value: v})
+  }
 
-	if field == "" {
-		filter = bson.D{}
-	}
+  log.Println(f)
 
 	op := options.Find()
 	op.SetSkip(offset)
 	op.SetLimit(limit)
 
-	cursor, err := collection.Find(context.TODO(), filter, op)
+	cursor, err := collection.Find(context.TODO(), f, op)
 	if err != nil {
 		log.Println(err)
 		return err

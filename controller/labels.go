@@ -11,7 +11,7 @@ import (
 type LabelService interface{
   Create(name string, namespace string) (bool, error)
   Delete(name string, namespace string) (bool, error)
-  List(keyword string, namespace string) ([]entity.Label, error)
+  List(filterField string, filterValue string, namespace string) ([]entity.Label, error)
   Attach(labelName string, entityId string, namespace string) (bool, error)
   GetEntities(labelName string, namespace string) ([]string, error)
   GetLabels(entityId string, namespace string) ([]entity.Label, error)
@@ -59,9 +59,10 @@ func (s *service) Delete(name string, namespace string)(bool, error){
   return s.MongoDB.DeleteDocByID(MONGO_DB, MONGO_COL, "name", name)
 }
 
-func (s *service) List(keyword string, namespace string)([]entity.Label, error){
+func (s *service) List(filterField string, filterValue string, namespace string)([]entity.Label, error){
   labels := []entity.Label{}
-  err := s.MongoDB.ListDocs(MONGO_DB, MONGO_COL, &labels, "name", keyword, 10, 0)
+  filter := map[string]interface{}{filterField:filterValue, "namespace": namespace}
+  err := s.MongoDB.ListDocs(MONGO_DB, MONGO_COL, &labels, filter, 10, 0)
   return labels, err
 }
 
@@ -84,8 +85,8 @@ func (s *service) GetEntities(labelName string, namespace string)([]string, erro
     zap.String("name", labelName),
     zap.String("namespace", namespace))
   results := []entity.LabelEntity{}
-  // TODO: also include namespace in search parameter
-  err := s.MongoDB.ListDocs(MONGO_DB, MONGO_LE_COL, &results, "name", labelName, 10, 0)
+  filter := map[string]interface{}{"name":labelName, "namespace": namespace}
+  err := s.MongoDB.ListDocs(MONGO_DB, MONGO_LE_COL, &results, filter, 10, 0)
 
   res := []string{}
   for _, v := range results{
@@ -101,8 +102,8 @@ func (s *service) GetLabels(entityId string, namespace string)([]entity.Label, e
     zap.String("namespace", namespace))
 
     results := []entity.LabelEntity{}
-  // TODO: also include namespace in search parameter
-  err := s.MongoDB.ListDocs(MONGO_DB, MONGO_LE_COL, &results, "entityid", entityId, 10, 0)
+  filter := map[string]interface{}{"entityid":entityId, "namespace": namespace}
+  err := s.MongoDB.ListDocs(MONGO_DB, MONGO_LE_COL, &results, filter, 10, 0)
 
   res := []entity.Label{}
   for _, v := range results{
