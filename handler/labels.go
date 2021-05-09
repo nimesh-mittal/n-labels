@@ -96,9 +96,7 @@ func (h *labelHandler) DeleteLabel(w http.ResponseWriter, r *http.Request) {
 
 func (h *labelHandler) ListLabel(w http.ResponseWriter, r *http.Request) {
   query := chi.URLParam(r, "LabelID")
-
   field := "name"
-
   namespace := "global"
   if strings.Contains(query, ":"){
     tokens := strings.Split(query, ":")
