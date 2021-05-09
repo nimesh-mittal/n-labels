@@ -4,7 +4,6 @@ import (
   "n_labels/entity"
   "n_labels/gateway"
   "go.uber.org/zap"
-  "os"
 )
 
 // Service represent API interface for labels
@@ -22,14 +21,12 @@ const MONGO_DB = "labels_db"
 const MONGO_COL = "label_col"
 const MONGO_LE_COL = "label_entity_col"
 
-func New() LabelService {
-  url := os.Getenv("MONGO_URL_VALUE")
-  db := gateway.New(url)
+func New(db gateway.MongoClient) LabelService {
   return &service{MongoDB: db}
 }
 
 type service struct{
-  MongoDB *gateway.MongoClient
+  MongoDB gateway.MongoClient
 }
 
 func (s *service) Create(name string, namespace string)(bool, error){

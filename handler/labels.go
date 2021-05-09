@@ -3,11 +3,13 @@ package handler
 import (
   "n_labels/controller"
   "n_labels/entity"
+  "n_labels/gateway"
   "net/http"
   "github.com/go-chi/chi/v5"
   "encoding/json"
   "strconv"
   "strings"
+  "os"
 )
 
 type LabelHandler interface{
@@ -25,7 +27,9 @@ type labelHandler struct{
 }
 
 func New() LabelHandler{
-  return &labelHandler{LabelService: controller.New()}
+  url := os.Getenv("MONGO_URL_VALUE")
+  db := gateway.New(url)
+  return &labelHandler{LabelService: controller.New(db)}
 }
 
 func (h *labelHandler) NewLabelHandler() http.Handler {
