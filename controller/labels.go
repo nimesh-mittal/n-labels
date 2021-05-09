@@ -16,6 +16,7 @@ type LabelService interface {
 	GetEntities(labelName string, namespace string) ([]string, error)
 	GetLabels(entityID string, namespace string) ([]entity.Label, error)
 }
+
 const mongoDB = "labels_db"
 const mongoColl = "label_col"
 const mongoLEColl = "label_entity_col"
