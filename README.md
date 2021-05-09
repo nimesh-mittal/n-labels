@@ -38,12 +38,16 @@ Label service should provide newly created labels in search results immediately
 ```go
 
 type Interface{
-  Create(labelName string) string    // create new label
-  Delete(labelID uuid) bool          // delete exisiting label
-  Attach(labelID uuid, entityID uuid) bool    // attach label to an entity
-  Search(keyword string) []string    // search labels by keyword
-  ListLabels(entityID uuid) []uuid // list labels of an entity
-  ListEntities(labelID uuid) []uuid // list entities of a label
+  // create new label
+  Create(labelName string, namespace string) string    
+  // delete exisiting label
+  Delete(labelID uuid, namespace string) bool          
+  // attach label to an entity
+  Attach(labelID uuid, namespace string, entityID uuid) bool    
+  // search labels by keyword
+  Search(query string) []string    
+  // list entities of a label
+  ListEntities(labelID uuid) []uuid 
 }
 
 ```

@@ -29,3 +29,8 @@ type AttachLabelRequest struct{
   Namespace string
   EntityId string
 }
+
+type DetachLabelRequest struct{
+  Namespace string
+  EntityId string
+}
