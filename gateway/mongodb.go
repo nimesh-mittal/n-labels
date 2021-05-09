@@ -3,14 +3,15 @@ package gateway
 import (
 	"context"
 	"go.mongodb.org/mongo-driver/bson"
-	_ "go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
+  // TODO: check if below import is really required
 	_ "go.mongodb.org/mongo-driver/mongo/readpref"
 	"log"
 	"time"
 )
 
+// MongoClient represents mongo client apis
 type MongoClient interface {
 	GetDocByID(db string, col string, result interface{}, field string, value interface{}) error
 	DeleteDocByID(db string, col string, filter map[string]interface{}) (bool, error)
@@ -24,6 +25,7 @@ type mongoClient struct {
 	Client *mongo.Client
 }
 
+// New creates new object of MongoClient
 func New(url string) MongoClient {
 	client, err := mongo.NewClient(options.Client().ApplyURI(url))
 	if err != nil {

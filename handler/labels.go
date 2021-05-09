@@ -12,6 +12,7 @@ import (
 	"strings"
 )
 
+// LabelHandler handles label endpoints
 type LabelHandler interface {
 	CreateLabel(w http.ResponseWriter, r *http.Request)
 	DeleteLabel(w http.ResponseWriter, r *http.Request)
@@ -26,6 +27,7 @@ type labelHandler struct {
 	LabelService controller.LabelService
 }
 
+// New creates new object of LabelHandler
 func New() LabelHandler {
 	url := os.Getenv("MONGO_URL_VALUE")
 	db := gateway.New(url)
@@ -137,7 +139,7 @@ func (h *labelHandler) AttachLabel(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	status, err := h.LabelService.Attach(id, attachLabelRequest.EntityId, attachLabelRequest.Namespace)
+	status, err := h.LabelService.Attach(id, attachLabelRequest.EntityID, attachLabelRequest.Namespace)
 
 	if err != nil {
 		e := entity.NewError("error processing attach label request")
@@ -167,7 +169,7 @@ func (h *labelHandler) DetachLabel(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	status, err := h.LabelService.Detach(id, detachLabelRequest.EntityId, detachLabelRequest.Namespace)
+	status, err := h.LabelService.Detach(id, detachLabelRequest.EntityID, detachLabelRequest.Namespace)
 
 	if err != nil {
 		e := entity.NewError("error processing detach label request")

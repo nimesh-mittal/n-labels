@@ -8,6 +8,7 @@ import (
 	"time"
 )
 
+// Server represents server interface
 type Server interface {
 	StartServer(address string)
 	Register(path string, handle func(http.ResponseWriter, *http.Request), method string)
@@ -18,6 +19,7 @@ type server struct {
 	Router *chi.Mux
 }
 
+// New creates new server object
 func New() Server {
 	router := chi.NewRouter()
 
