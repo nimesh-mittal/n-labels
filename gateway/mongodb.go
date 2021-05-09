@@ -11,13 +11,13 @@ import (
 	"time"
 )
 
-type MongoClient interface{
-  GetDocByID(db string, col string, result interface{}, field string, value interface{}) error
-  DeleteDocByID(db string, col string, filter map[string]interface{}) (bool, error)
-  ListDocs(db string, col string, results interface{}, filter map[string]interface{}, limit int64, offset int64) error
-  InsertDoc(db string, col string, doc interface{}) error
-  UpdateDocByID(db string, col string, field string, value interface{}, updateKey string, updateValue interface{}) (bool, error)
-  Close()
+type MongoClient interface {
+	GetDocByID(db string, col string, result interface{}, field string, value interface{}) error
+	DeleteDocByID(db string, col string, filter map[string]interface{}) (bool, error)
+	ListDocs(db string, col string, results interface{}, filter map[string]interface{}, limit int64, offset int64) error
+	InsertDoc(db string, col string, doc interface{}) error
+	UpdateDocByID(db string, col string, field string, value interface{}, updateKey string, updateValue interface{}) (bool, error)
+	Close()
 }
 
 type mongoClient struct {
@@ -33,7 +33,7 @@ func New(url string) MongoClient {
 	err = client.Connect(ctx)
 	if err != nil {
 		log.Fatal(err)
-    // TODO: handle this error
+		// TODO: handle this error
 	}
 
 	return &mongoClient{Client: client}
@@ -58,7 +58,7 @@ func (mc *mongoClient) GetDocByID(db string, col string, result interface{}, fie
 	collection := database.Collection(col)
 
 	filter := bson.D{{Key: field, Value: value}}
-  
+
 	if field == "" {
 		filter = bson.D{}
 	}
@@ -76,10 +76,10 @@ func (mc *mongoClient) DeleteDocByID(db string, col string, filter map[string]in
 	database := mc.Client.Database(db)
 	collection := database.Collection(col)
 
-  f := bson.D{}
-  for k,v := range filter{
-    f = append(f, bson.E{Key: k, Value: v})
-  }
+	f := bson.D{}
+	for k, v := range filter {
+		f = append(f, bson.E{Key: k, Value: v})
+	}
 
 	del, err := collection.DeleteOne(context.TODO(), f)
 	if err != nil {
@@ -94,12 +94,12 @@ func (mc *mongoClient) ListDocs(db string, col string, results interface{}, filt
 	database := mc.Client.Database(db)
 	collection := database.Collection(col)
 
-  f := bson.D{}
-  for k,v := range filter{
-    f = append(f, bson.E{Key: k, Value: v})
-  }
+	f := bson.D{}
+	for k, v := range filter {
+		f = append(f, bson.E{Key: k, Value: v})
+	}
 
-  log.Println(f)
+	log.Println(f)
 
 	op := options.Find()
 	op.SetSkip(offset)

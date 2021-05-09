@@ -1,27 +1,27 @@
 package controller
 
 import (
-  "testing"
-  "n_labels/mocks"
-  "github.com/golang/mock/gomock"
+	"github.com/golang/mock/gomock"
+	"n_labels/mocks"
+	"testing"
 )
 
-func TestCreate(t *testing.T){
-  mockCtrl := gomock.NewController(t)
-  defer mockCtrl.Finish()
+func TestCreate(t *testing.T) {
+	mockCtrl := gomock.NewController(t)
+	defer mockCtrl.Finish()
 
-  mockMongoClient := mocks.NewMockMongoClient(mockCtrl)
-  mockMongoClient.EXPECT().InsertDoc(gomock.Any(), gomock.Any(), gomock.Any()).Return(nil).Times(1)
+	mockMongoClient := mocks.NewMockMongoClient(mockCtrl)
+	mockMongoClient.EXPECT().InsertDoc(gomock.Any(), gomock.Any(), gomock.Any()).Return(nil).Times(1)
 
-  s := New(mockMongoClient)
-  
-  status, err := s.Create("label1", "namespace1")
+	s := New(mockMongoClient)
 
-  if err != nil{
-    t.Errorf("expected %s", "no errors")
-  }
+	status, err := s.Create("label1", "namespace1")
 
-  if status != true {
-    t.Errorf("expected %s", "status true")
-  }
+	if err != nil {
+		t.Errorf("expected %s", "no errors")
+	}
+
+	if status != true {
+		t.Errorf("expected %s", "status true")
+	}
 }

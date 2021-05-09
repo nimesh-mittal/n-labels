@@ -1,18 +1,18 @@
 package main
 
 import (
+	"go.uber.org/zap"
 	"n_labels/handler"
 	"n_labels/server"
-  "go.uber.org/zap"
 )
 
-func initLogger(){
-  logger, _ := zap.NewProduction()
+func initLogger() {
+	logger, _ := zap.NewProduction()
 	zap.ReplaceGlobals(logger)
 }
 
 func main() {
-  initLogger()
+	initLogger()
 
 	h := handler.New()
 
