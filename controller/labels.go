@@ -29,7 +29,7 @@ func New() LabelService {
 }
 
 type service struct{
-  MongoDB *gateway.MongoClient
+  MongoDB gateway.MongoClient
 }
 
 func (s *service) Create(name string, namespace string)(bool, error){
