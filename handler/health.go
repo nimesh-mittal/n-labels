@@ -7,12 +7,12 @@ import (
 )
 
 type HealthHandler interface {
-  Home(w http.ResponseWriter, r *http.Request)
-  Health(w http.ResponseWriter, r *http.Request)
-  NewHealthRouter() http.Handler
+	Home(w http.ResponseWriter, r *http.Request)
+	Health(w http.ResponseWriter, r *http.Request)
+	NewHealthRouter() http.Handler
 }
 
-type healthHandler struct {}
+type healthHandler struct{}
 
 // NewHealthHandler creates new object of HealthHandler
 func NewHealthHandler() HealthHandler {
@@ -29,23 +29,23 @@ func (h *healthHandler) NewHealthRouter() http.Handler {
 }
 
 func (hh *healthHandler) Home(w http.ResponseWriter, r *http.Request) {
-  type home struct{
-    Greet string
-  }
+	type home struct {
+		Greet string
+	}
 
-  h := home{Greet: "hello"}
+	h := home{Greet: "hello"}
 
-  res, _ := json.Marshal(h)
+	res, _ := json.Marshal(h)
 	w.Write(res)
 }
 
 func (hh *healthHandler) Health(w http.ResponseWriter, r *http.Request) {
-  type health struct{
-    Status string
-  }
+	type health struct {
+		Status string
+	}
 
-  h := health{Status: "green"}
+	h := health{Status: "green"}
 
-  res, _ := json.Marshal(h)
+	res, _ := json.Marshal(h)
 	w.Write(res)
 }
