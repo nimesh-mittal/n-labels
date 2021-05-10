@@ -29,7 +29,7 @@ Label service should aim for less than 100 ms P95 latency
 - Throughput
 Label service should provide QPS of 2000 per node
 - Freshness
-Label service should provide newly created labels in search results immediately 
+Label service should provide newly created labels in search results immediately
 
 # Architecture
 ![image](https://user-images.githubusercontent.com/10060860/115158869-02ffbc00-a0ae-11eb-9c77-8a7fcb58ba39.png)
@@ -41,15 +41,15 @@ Label service should provide newly created labels in search results immediately
 
 type Interface{
   // create new label
-  Create(labelName string, namespace string) string    
+  Create(labelName string, namespace string) string
   // delete exisiting label
-  Delete(labelID uuid, namespace string) bool          
+  Delete(labelID uuid, namespace string) bool
   // attach label to an entity
-  Attach(labelID uuid, namespace string, entityID uuid) bool    
+  Attach(labelID uuid, namespace string, entityID uuid) bool
   // search labels by keyword
-  Search(query string) []string    
+  Search(query string) []string
   // list entities of a label
-  ListEntities(labelID uuid) []uuid 
+  ListEntities(labelID uuid) []uuid
 }
 
 ```
@@ -63,7 +63,7 @@ type Interface{
 Note: expand who... as created_by, created_at, updated_by, updated_at
 
 ## Database choice
-A close look at the API interface reveals equal amount to read and write requests. While data consistency is required, need for strong transaction semantics is not required hence any database that provides eventual consistency can also be consider. 
+A close look at the API interface reveals equal amount to read and write requests. While data consistency is required, need for strong transaction semantics is not required hence any database that provides eventual consistency can also be consider.
 
 Given Mongo DB provides high availability and horizontal scalability it can be use to achive hight throughput and low latency.
 
@@ -78,7 +78,7 @@ Load balancer should also rate limiting incoming requests to avoid single user/c
 Service should implement good code coverage and write functional and load test cases to maintain high engineering quality standards.
 
 # Logging, Alerting and Monitoring
-Service should also expose health end-point to accuretly monitor the health of the service. 
+Service should also expose health end-point to accuretly monitor the health of the service.
 
 Service should also integrate with alerting framework like new relic to accuretly alert developers on unexpected failured and downtime
 
@@ -91,6 +91,7 @@ Service should validated the request using Oauth token to ensure request is comi
 This README file provides complete documentation. Link to any other documentation will be provided in the Reference section of this document.
 
 # Local Development Setup
+
 - Start service
 ```go run main.go```
 - Run testcases with coverage
