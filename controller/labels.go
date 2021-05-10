@@ -105,7 +105,7 @@ func (s *service) Detach(labelName string, entityID string, namespace string) (b
 }
 
 func (s *service) GetEntities(labelName string, namespace string) ([]string, error) {
-	zap.L().Info("receive GetEntities reqyest",
+	zap.L().Info("receive GetEntities request",
 		zap.String("name", labelName),
 		zap.String("namespace", namespace))
 	results := []entity.LabelEntity{}

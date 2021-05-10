@@ -1,5 +1,7 @@
 # n-labels
 
+[![Go Report Card](https://goreportcard.com/badge/github.com/nimesh-mittal/n_labels)](https://goreportcard.com/report/github.com/nimesh-mittal/n_labels)
+
 # Background
 Aim of this service is to provide ability to manage set of entities by associating entities with tags, also called as labels. Labels are attached to an entity in order to achive following benefits
 

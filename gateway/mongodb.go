@@ -101,8 +101,6 @@ func (mc *mongoClient) ListDocs(db string, col string, results interface{}, filt
 		f = append(f, bson.E{Key: k, Value: v})
 	}
 
-	log.Println(f)
-
 	op := options.Find()
 	op.SetSkip(offset)
 	op.SetLimit(limit)

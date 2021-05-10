@@ -20,21 +20,22 @@ type LabelHandler interface {
 	AttachLabel(w http.ResponseWriter, r *http.Request)
 	GetLabels(w http.ResponseWriter, r *http.Request)
 	GetEntities(w http.ResponseWriter, r *http.Request)
-	NewLabelHandler() http.Handler
+	NewLabelRouter() http.Handler
 }
 
 type labelHandler struct {
 	LabelService controller.LabelService
 }
 
-// New creates new object of LabelHandler
-func New() LabelHandler {
+// NewLabelHandler creates new object of LabelHandler
+func NewLabelHandler() LabelHandler {
 	url := os.Getenv("MONGO_URL_VALUE")
 	db := gateway.New(url)
 	return &labelHandler{LabelService: controller.New(db)}
 }
 
-func (h *labelHandler) NewLabelHandler() http.Handler {
+// NewLabelRouter constructs new router for label endpoints
+func (h *labelHandler) NewLabelRouter() http.Handler {
 	r := chi.NewRouter()
 
 	r.Post("/", h.CreateLabel)

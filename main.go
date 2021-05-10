@@ -14,10 +14,13 @@ func initLogger() {
 func main() {
 	initLogger()
 
-	h := handler.New()
+  s := server.New()
+	
+  hh := handler.NewHealthHandler()
+	s.Mount("/", hh.NewHealthRouter())
 
-	s := server.New()
-	s.Mount("/labels", h.NewLabelHandler())
+  lh := handler.NewLabelHandler()
+  s.Mount("/labels", lh.NewLabelRouter())
 
 	s.StartServer(":8084")
 }
