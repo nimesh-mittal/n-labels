@@ -2,7 +2,6 @@ package handler
 
 import (
 	"encoding/json"
-	"github.com/go-chi/chi/v5"
 	"n_labels/controller"
 	"n_labels/entity"
 	"n_labels/gateway"
@@ -10,6 +9,8 @@ import (
 	"os"
 	"strconv"
 	"strings"
+
+	"github.com/go-chi/chi/v5"
 )
 
 // LabelHandler handles label endpoints
@@ -66,6 +67,7 @@ func (h *labelHandler) CreateLabel(w http.ResponseWriter, r *http.Request) {
 	status, err := h.LabelService.Create(createLabelRequest.Name, createLabelRequest.Namespace)
 
 	if err != nil {
+		// TODO: always return error in json format
 		e := entity.NewError("error processing create label request")
 		res, _ := json.Marshal(e)
 		w.Write(res)
