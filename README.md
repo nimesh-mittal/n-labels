@@ -64,8 +64,8 @@ type Interface{
 
 | Table Name | Description | Columns |
 | ------- | ---- | ---- |
-| label | Represents label | (namespace, name, enable, *who...*)
-| label_entity | Represents mapping between label and entity | (namespace, label_id, entity_id, attached_by, *who...*)
+| label | Represents label | (namespace, label_name, enable, *who...*)
+| label_entity | Represents mapping between label and entity | (namespace, label_name, entity_id, attached_by, *who...*)
 
 Note: expand who... as created_by, created_at, updated_by, updated_at
 
